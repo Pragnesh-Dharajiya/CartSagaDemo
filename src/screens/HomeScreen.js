@@ -31,15 +31,14 @@ const HomeScreen = (props) => {
   }, []);
 
   function _renderItem(item) {
-    
     return (
       <TouchableOpacity
         style={[styles.divCategorie, {backgroundColor: item.color}]}
         onPress={() => {
           props.navigation.navigate('FoodDetail', {
             foodId: item.id,
-            foodName:item.name,
-            foodColor:item.color,
+            foodName: item.name,
+
             food: selectFood,
           });
         }}>
@@ -127,7 +126,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
   },
-  
 });
 
 const mapStateToProps = (state) => {

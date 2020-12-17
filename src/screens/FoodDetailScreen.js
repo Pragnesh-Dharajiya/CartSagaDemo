@@ -12,14 +12,22 @@ import {
   ScrollView,
   Text,
 } from 'react-native';
+import Icon from 'react-native-ionicons';
+
+import CartIcon from '../global/CartIcon';
 var {height, width} = Dimensions.get('window');
 
 const FoodDetailScreen = (props) => {
+  props.navigation.setOptions({
+    headerRight: () => CartIcon(props.navigation),
+  });
+
   function _renderItemFood(item) {
     let catg = props.route.params.foodId;
     if (catg == item.categorie) {
       return (
-        <TouchableOpacity style={[{backgroundColor:'white'},styles.divFood]}>
+        <TouchableOpacity
+          style={[{backgroundColor: 'white', height: 300}, styles.divFood]}>
           <Image
             style={styles.imageFood}
             resizeMode="contain"
@@ -35,8 +43,44 @@ const FoodDetailScreen = (props) => {
           <Text style={{fontWeight: 'bold', fontSize: 22, textAlign: 'center'}}>
             {item.name}
           </Text>
-          <Text>Descp Food and Details</Text>
-          <Text style={{fontSize: 20, color: 'green'}}>${item.price}</Text>
+          <Text
+            style={{
+              textAlign: 'center',
+              marginTop: 5,
+              position: 'absolute',
+              bottom: 90,
+            }}>
+            Descp Food and Details
+          </Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 20,
+              color: 'tomato',
+              textAlign: 'center',
+              position: 'absolute',
+              bottom: 55,
+            }}>
+            Price: ${item.price}
+          </Text>
+          <TouchableOpacity
+            style={{
+              width: width / 2 - 40,
+              backgroundColor: '#33c37d',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 5,
+              padding: 4,
+              position: 'absolute',
+              bottom: 10,
+            }}>
+            <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold'}}>
+              Add Cart
+            </Text>
+            <View style={{width: 10}} />
+            <Icon name="ios-add-circle" size={30} color={'white'} />
+          </TouchableOpacity>
         </TouchableOpacity>
       );
     }
@@ -75,7 +119,7 @@ const styles = StyleSheet.create({
   },
   divFood: {
     width: width / 2 - 20,
-    padding: 10,
+    padding: 20,
     borderRadius: 10,
     marginTop: 55,
     marginBottom: 5,
@@ -84,7 +128,6 @@ const styles = StyleSheet.create({
     elevation: 8,
     shadowOpacity: 0.3,
     shadowRadius: 50,
-    
   },
 });
 

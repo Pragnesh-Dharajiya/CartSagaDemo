@@ -16,11 +16,11 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* ShoppingAppDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ShoppingAppDemoTests.m */; };
 		5AF10E4F068049BC22241904 /* libPods-ShoppingAppDemo-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11D44C82C7AD4DADDF449DF0 /* libPods-ShoppingAppDemo-tvOSTests.a */; };
+		641AF39C0D38493E84EFA63F /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E09C87A01E7940B39EA89E38 /* Ionicons.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A2C7150957B101CBBBF5F501 /* libPods-ShoppingAppDemo-ShoppingAppDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0663358511EDFD3CAA9F95B3 /* libPods-ShoppingAppDemo-ShoppingAppDemoTests.a */; };
 		F241C71105C1A2B8819A9462 /* libPods-ShoppingAppDemo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C13BDB66933C8BF61267D8E /* libPods-ShoppingAppDemo-tvOS.a */; };
 		F243E2D8FB569802FEEF9311 /* libPods-ShoppingAppDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92945EADA3CA834A3CB957A1 /* libPods-ShoppingAppDemo.a */; };
-		641AF39C0D38493E84EFA63F /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E09C87A01E7940B39EA89E38 /* Ionicons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,10 +65,10 @@
 		92945EADA3CA834A3CB957A1 /* libPods-ShoppingAppDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShoppingAppDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A300F7621778AC69ECDB8517 /* Pods-ShoppingAppDemo-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShoppingAppDemo-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-ShoppingAppDemo-tvOS/Pods-ShoppingAppDemo-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		BCF779A07CEFFF68D3C69E43 /* Pods-ShoppingAppDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShoppingAppDemo.debug.xcconfig"; path = "Target Support Files/Pods-ShoppingAppDemo/Pods-ShoppingAppDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		E09C87A01E7940B39EA89E38 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-ionicons/fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		ECE15B6C3C6D1D82E4E772FB /* Pods-ShoppingAppDemo-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShoppingAppDemo-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-ShoppingAppDemo-tvOSTests/Pods-ShoppingAppDemo-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		E09C87A01E7940B39EA89E38 /* Ionicons.ttf */ = {isa = PBXFileReference; name = "Ionicons.ttf"; path = "../node_modules/react-native-ionicons/fonts/Ionicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,13 +202,13 @@
 			sourceTree = "<group>";
 		};
 		DCC4EF438A304E1E913DD4C7 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				E09C87A01E7940B39EA89E38 /* Ionicons.ttf */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
 			path = "";
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
