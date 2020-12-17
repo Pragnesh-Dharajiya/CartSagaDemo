@@ -9,51 +9,52 @@ import HomeScreen from '../screens/HomeScreen';
 
 import { Image, TouchableOpacity } from 'react-native';
 import CustomSidebarMenu from './CustomSidebarMenu';
+import FoodDetailScreen from '../screens/FoodDetailScreen';
 
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
-const TabStack = ({navigation}) => {
-  return (
-    <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
-          let iconName;
+// const TabStack = ({navigation}) => {
+//   return (
+//     <Tab.Navigator
+//       screenOptions={({route}) => ({
+//         tabBarIcon: ({focused, color, size}) => {
+//           let iconName;
 
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home';
-          } else if (route.name === 'Profile') {
-            iconName = focused ? 'contact' : 'contact';
-          }
-          // return (
-          //   // <Icon ios={iconName} android={iconName} size={size} color={color} />
-          // );
-        },
-      })}
-      tabBarOptions={{
-        iconStyle: {top: 10},
+//           if (route.name === 'Home') {
+//             iconName = focused ? 'home' : 'home';
+//           } else if (route.name === 'Profile') {
+//             iconName = focused ? 'contact' : 'contact';
+//           }
+//           // return (
+//           //   // <Icon ios={iconName} android={iconName} size={size} color={color} />
+//           // );
+//         },
+//       })}
+//       tabBarOptions={{
+//         iconStyle: {top: 10},
 
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
-        style: {
-          backgroundColor: '#222222',
-        },
-        labelStyle: {
-          textAlign: 'center',
-          fontSize: 17,
-          fontWeight: 'bold',
-          top: 10,
-          borderBottomColor: 'tomato',
-          borderRadius: 20,
-        },
-      }}>
-      <Tab.Screen name="Home" component={Home} />
-      {/* <Tab.Screen name="Profile" component={ProfileStack} /> */}
-    </Tab.Navigator>
-  );
-};
+//         activeTintColor: 'tomato',
+//         inactiveTintColor: 'gray',
+//         style: {
+//           backgroundColor: '#222222',
+//         },
+//         labelStyle: {
+//           textAlign: 'center',
+//           fontSize: 17,
+//           fontWeight: 'bold',
+//           top: 10,
+//           borderBottomColor: 'tomato',
+//           borderRadius: 20,
+//         },
+//       }}>
+//       <Tab.Screen name="Home" component={Home} />
+//       {/* <Tab.Screen name="Profile" component={ProfileStack} /> */}
+//     </Tab.Navigator>
+//   );
+// };
 // function ProfileStack({navigation}) {
 //   return (
 //     <Stack.Navigator>
@@ -113,6 +114,21 @@ function Home({navigation}) {
         }}
         component={HomeScreen}
       />
+      <Stack.Screen
+        name="FoodDetail"
+        options={{
+          headerTintColor: 'white',
+          headerBackTitleVisible: false,
+          headerTitleStyle: {
+            fontSize: 18,
+            color: '#FFFFFF',
+          },
+          headerStyle: {
+            backgroundColor: '#d9534f',
+          },
+        }}
+        component={FoodDetailScreen}
+      />
       {/* <Stack.Screen
         name="News"
         options={{
@@ -162,7 +178,7 @@ function DrawerHome({navigation}) {
       drawerType="slide"
       screenOptions={{headerShown: false}}
       drawerContent={(props) => <CustomSidebarMenu {...props} />}>
-      <Drawer.Screen name="Home" component={TabStack} />
+      <Drawer.Screen name="Home" component={Home} />
     </Drawer.Navigator>
   );
 }
