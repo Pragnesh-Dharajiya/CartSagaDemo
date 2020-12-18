@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -13,14 +13,22 @@ import {
   Text,
 } from 'react-native';
 import Icon from 'react-native-ionicons';
-
+import {connect, useDispatch, useSelector} from 'react-redux';
+import * as CartActions from '../actions/CartActions';
 import CartIcon from '../global/CartIcon';
 var {height, width} = Dimensions.get('window');
+import * as CONST from '../utils/Constants';
 
 const FoodDetailScreen = (props) => {
   props.navigation.setOptions({
-    headerRight: () => CartIcon(props.navigation),
+    headerRight: () => CartIcon({props, cartItems}),
   });
+  const cartItems = useSelector((state) => state);
+
+  const dispatch = useDispatch();
+  const addItemToCart = (item) => {
+    dispatch({type: CONST.ADD_TO_CART, payload: item});
+  };
 
   function _renderItemFood(item) {
     let catg = props.route.params.foodId;
@@ -64,6 +72,7 @@ const FoodDetailScreen = (props) => {
             Price: ${item.price}
           </Text>
           <TouchableOpacity
+            onPress={() => addItemToCart(item)}
             style={{
               width: width / 2 - 40,
               backgroundColor: '#33c37d',

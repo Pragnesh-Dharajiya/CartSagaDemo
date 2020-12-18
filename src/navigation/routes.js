@@ -7,10 +7,10 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 
-import { Image, TouchableOpacity } from 'react-native';
+import {Image, TouchableOpacity} from 'react-native';
 import CustomSidebarMenu from './CustomSidebarMenu';
 import FoodDetailScreen from '../screens/FoodDetailScreen';
-
+import CartDetailScreen from '../screens/CartDetailScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -128,6 +128,21 @@ function Home({navigation}) {
           },
         }}
         component={FoodDetailScreen}
+      />
+      <Stack.Screen
+        name="Cart"
+        options={{
+          headerTintColor: 'white',
+          headerBackTitleVisible: false,
+          headerTitleStyle: {
+            fontSize: 18,
+            color: '#FFFFFF',
+          },
+          headerStyle: {
+            backgroundColor: '#d9534f',
+          },
+        }}
+        component={CartDetailScreen}
       />
       {/* <Stack.Screen
         name="News"
