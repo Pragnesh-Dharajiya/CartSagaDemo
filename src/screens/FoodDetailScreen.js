@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import _ from 'lodash';
 import {
   View,
   StyleSheet,
@@ -20,6 +21,11 @@ var {height, width} = Dimensions.get('window');
 import * as CONST from '../utils/Constants';
 
 const FoodDetailScreen = (props) => {
+  const [catg, setCatg] = useState([]);
+  useEffect(() => {
+    setCatg(props.route.params.foodId);
+  }, []);
+
   props.navigation.setOptions({
     headerRight: () => CartIcon({props, cartItems}),
   });
@@ -31,7 +37,6 @@ const FoodDetailScreen = (props) => {
   };
 
   function _renderItemFood(item) {
-    let catg = props.route.params.foodId;
     if (catg == item.categorie) {
       return (
         <TouchableOpacity

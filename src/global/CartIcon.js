@@ -27,7 +27,7 @@ const CartIcon = ({props, cartItems}) => {
             zIndex: 2000,
           }}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>
-            {cartItems.cartItemsReducer.length}
+            {cartItems.cartItemsReducer.quantity}
           </Text>
         </View>
         <Image source={require('../assets/image/ic_carts.png')} />

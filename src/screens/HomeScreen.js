@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     bannerData: state.BannerReducer.bannerData,
-
     isFetching: state.BannerReducer.isFetching,
   };
 };

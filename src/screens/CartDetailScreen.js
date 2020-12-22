@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import _ from 'lodash';
 import {
   View,
   Image,
@@ -16,39 +17,21 @@ var {height, width} = Dimensions.get('window');
 import * as CONST from '../utils/Constants';
 
 const CartDetailScreen = (props) => {
+  const cart = useSelector((state) => state.cartItemsReducer.cartItems);
   const dispatch = useDispatch();
 
-  const removeItemFromCart = (item) =>
+  const removeItemFromCart = (item, index) =>
     dispatch({
       type: CONST.REMOVE_FROM_CART,
-      payload: item,
+      payload: {item, index},
     });
 
-  const cartItems = useSelector((state) => state);
-  let Cart = cartItems.cartItemsReducer;
-  const [quantity, setQuantity] = useState(1);
-  // for (let i = 0; i < Cart.length; i++) {
-
-  //   const [generalPrice, setGeneralPrice] = useState(
-  //     cartItems.cartItemsReducer[i].price,
-  //   );
-  //   const [totalPrice, setTotalPrice] = useState(generalPrice);
-  //   let defaultTotalPrice = generalPrice * quantity;
-  // }
-  function incrementQuantity() {
-    
-    setQuantity((prevQuantity) => prevQuantity + 1);
-    // setTotalPrice(prevPrice=> prevPrice + generalPrice);
-  }
-  function decrementQuantity() {
-    if (quantity != 1) {
-      setQuantaty((prevQuantity) => prevQuantity - 1);
-    } else {
-      Alert.alert('quantity must be atleast 1');
-    }
-
-    // setTotalPrice(prevPrice=> prevPrice - generalPrice);
-  }
+  const incrementQuantity = (item) => {
+    dispatch({type: CONST.INC_ITEM, payload: item});
+  };
+  const decrementQuantity = (item) => {
+    dispatch({type: CONST.DEC_ITEM, payload: item});
+  };
 
   return (
     <View
@@ -65,11 +48,11 @@ const CartDetailScreen = (props) => {
         }}>
         Cart Food
       </Text>
-      {Cart.length !== 0 ? (
+      {cart.length !== 0 ? (
         <FlatList
-          data={Cart}
-          keyExtractor={(item) => item.categorie.toString()}
-          renderItem={({item}) => (
+          data={cart}
+          keyExtractor={(item) => item.categorie}
+          renderItem={({item, index}) => (
             <View
               style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
               <View style={{height: 20}} />
@@ -80,7 +63,6 @@ const CartDetailScreen = (props) => {
                 <View
                   style={{
                     width: width - 20,
-                    margin: 10,
                     backgroundColor: 'transparent',
                     flexDirection: 'row',
                     borderBottomWidth: 2,
@@ -108,40 +90,56 @@ const CartDetailScreen = (props) => {
                       style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
-                        top: 20,
+                        top: 10,
                         zIndex: 999,
                       }}>
                       <Text
                         style={{
                           fontWeight: 'bold',
-                          color: '#9fd236',
+                          color: '#48b4e0',
                           fontSize: 20,
                         }}>
-                        Price: ${item.price*quantity}
+                        Price: ${item.price}
                       </Text>
                       <View
                         style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <TouchableOpacity onPress={() => decrementQuantity()}>
+                        <TouchableOpacity
+                          onPress={() => decrementQuantity(item)}>
                           <Icon
                             name="ios-remove-circle"
                             size={30}
-                            color={'#9fd236'}
+                            color={'#48b4e0'}
                           />
                         </TouchableOpacity>
                         <Text
                           style={{paddingHorizontal: 8, fontWeight: 'bold'}}>
-                          {quantity}
+                          {item.quantity}
                         </Text>
-                        <TouchableOpacity onPress={() => incrementQuantity()}>
+                        <TouchableOpacity
+                          onPress={() => incrementQuantity(item)}>
                           <Icon
                             name="ios-add-circle"
                             size={30}
-                            color={'#9fd236'}
+                            color={'#48b4e0'}
                           />
                         </TouchableOpacity>
                       </View>
                     </View>
-                    <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#48b4e0',
+                        fontSize: 20,
+                        top: 15,
+                      }}>
+                      Total Price: ${item.total}
+                    </Text>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        paddingBottom: 15,
+                      }}>
                       <TouchableOpacity
                         onPress={() => Alert.alert('Buy Success')}
                         style={{
@@ -164,7 +162,7 @@ const CartDetailScreen = (props) => {
                         </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
-                        onPress={() => removeItemFromCart(item)}
+                        onPress={() => removeItemFromCart(item, index)}
                         style={{
                           alignSelf: 'center',
                           backgroundColor: 'tomato',
