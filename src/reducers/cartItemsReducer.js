@@ -35,25 +35,15 @@ const cartItemsReducer = (state = initialState, action) => {
       };
 
     case CONST.REMOVE_FROM_CART:
-      // let filteredItems = _.filter(cartItems, (item) => {
-      //   return item.name.toLowerCase() != action.payload.name.toLowerCase();
-      // });
-      // let index = cartItems.find((item) => item.image === action.payload.image);
-      // console.log('index', index);
-      // cartItems.splice(index);
-      console.log(action.payload.index);
-      // cartItems.splice(action.payload.index, 1);
-      let catrs = _.remove(cartItems, (item,index) => {
-        return 
-      });
-      console.log('carts->>', catrs);
-      // console.log('remove cart:', cartItems);
+      cartItems.splice(action.payload.index, 1);
+
       return {
         ...state,
-        cartItems: catrs,
+        cartItems,
         total: _.sumBy(cartItems, 'total'),
         quantity: _.sumBy(cartItems, 'quantity'),
       };
+
     case CONST.INC_ITEM:
       let inc = _.findIndex(cartItems, (item) => {
         return item.name.toLowerCase() === action.payload.name.toLowerCase();
@@ -74,6 +64,7 @@ const cartItemsReducer = (state = initialState, action) => {
         total: _.sumBy(cartItems, 'total'),
         quantity: _.sumBy(cartItems, 'quantity'),
       };
+
     case CONST.DEC_ITEM:
       let dec = _.findIndex(cartItems, (item) => {
         return item.name.toLowerCase() === action.payload.name.toLowerCase();

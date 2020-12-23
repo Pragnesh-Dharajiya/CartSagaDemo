@@ -15,9 +15,13 @@ import Icon from 'react-native-ionicons';
 import {useDispatch, useSelector} from 'react-redux';
 var {height, width} = Dimensions.get('window');
 import * as CONST from '../utils/Constants';
+import {connect} from 'react-redux';
 
 const CartDetailScreen = (props) => {
-  const cart = useSelector((state) => state.cartItemsReducer.cartItems);
+  // const cart = useSelector((state) => state.cartItemsReducer.cartItems);
+  console.log(props);
+  // console.log('carts after-->', cart);
+
   const dispatch = useDispatch();
 
   const removeItemFromCart = (item, index) =>
@@ -48,10 +52,9 @@ const CartDetailScreen = (props) => {
         }}>
         Cart Food
       </Text>
-      {cart.length !== 0 ? (
+      {props.cartItems.length !== 0 ? (
         <FlatList
-          data={cart}
-          keyExtractor={(item) => item.categorie}
+          data={props.cartItems}
           renderItem={({item, index}) => (
             <View
               style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -245,5 +248,9 @@ const styles = StyleSheet.create({
     fontSize: 28,
   },
 });
-
-export default CartDetailScreen;
+const mapStateToProps = (state) => {
+  return {
+    cartItems: state.cartItemsReducer.cartItems,
+  };
+};
+export default connect(mapStateToProps)(CartDetailScreen);
