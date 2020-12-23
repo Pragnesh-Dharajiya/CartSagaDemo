@@ -12,6 +12,9 @@ import CustomSidebarMenu from './CustomSidebarMenu';
 import FoodDetailScreen from '../screens/FoodDetailScreen';
 import CartDetailScreen from '../screens/CartDetailScreen';
 
+import SignInScreen from '../screens/SignInScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -86,6 +89,18 @@ const Tab = createBottomTabNavigator();
 //     </Stack.Navigator>
 //   );
 // }
+function Login({navigation}) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="login"
+        options={{headerShown: false}}
+        component={SignInScreen}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function Home({navigation}) {
   return (
     <Stack.Navigator>
@@ -144,46 +159,6 @@ function Home({navigation}) {
         }}
         component={CartDetailScreen}
       />
-      {/* <Stack.Screen
-        name="News"
-        options={{
-          headerTintColor: 'white',
-          headerBackTitleVisible: false,
-          headerTitleStyle: {
-            fontSize: 18,
-            color: '#FFFFFF',
-          },
-          headerStyle: {
-            backgroundColor: '#d9534f',
-          },
-        }}
-        component={DescreptionScreen}
-      />
-      <Stack.Screen
-        name="profilescreen"
-        options={{
-          headerTitle: 'News App',
-          headerTintColor: 'royalblue',
-          headerBackTitleVisible: false,
-          headerTitleStyle: {
-            fontSize: 24,
-            color: '#000',
-            textAlign: 'left',
-          },
-          headerStyle: {
-            backgroundColor: '#d9534f',
-          },
-          headerLeft: ({naviagation}) => (
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
-              <Image
-                style={{marginLeft: 15}}
-                source={require('../src/assets/image/ic_menu.png')}
-              />
-            </TouchableOpacity>
-          ),
-        }}
-        component={ProfileScreen}
-      /> */}
     </Stack.Navigator>
   );
 }
@@ -199,11 +174,38 @@ function DrawerHome({navigation}) {
 }
 
 const RouteApp = ({navigation}) => {
+  const [authenticated, setAuthenticated] = useState('');
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    AsyncStorage.getItem('userData')
+      .then((res) => {
+        let userInfo = JSON.parse(res);
+        setAuthenticated(userInfo);
+        setLoading(true);
+      })
+      .catch((err) => {
+        setLoading(true);
+      });
+  }, []);
+
+  if (!isLoading) {
+    return null;
+  }
+
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Home" component={DrawerHome} />
-      </Stack.Navigator>
+      {authenticated ? (
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="Home" component={DrawerHome} />
+          <Stack.Screen name="Login" component={Login} />
+        </Stack.Navigator>
+      ) : (
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Home" component={DrawerHome} />
+        </Stack.Navigator>
+      )}
     </NavigationContainer>
   );
 };
