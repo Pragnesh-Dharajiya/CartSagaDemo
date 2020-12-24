@@ -14,81 +14,82 @@ import CartDetailScreen from '../screens/CartDetailScreen';
 
 import SignInScreen from '../screens/SignInScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-ionicons';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
-// const TabStack = ({navigation}) => {
-//   return (
-//     <Tab.Navigator
-//       screenOptions={({route}) => ({
-//         tabBarIcon: ({focused, color, size}) => {
-//           let iconName;
+const TabStack = ({navigation}) => {
+  return (
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
 
-//           if (route.name === 'Home') {
-//             iconName = focused ? 'home' : 'home';
-//           } else if (route.name === 'Profile') {
-//             iconName = focused ? 'contact' : 'contact';
-//           }
-//           // return (
-//           //   // <Icon ios={iconName} android={iconName} size={size} color={color} />
-//           // );
-//         },
-//       })}
-//       tabBarOptions={{
-//         iconStyle: {top: 10},
+          if (route.name === 'Home') {
+            iconName = focused ? 'home' : 'home';
+          } else if (route.name === 'Cart') {
+            iconName = focused ? 'cart' : 'cart';
+          }
+          return (
+            <Icon ios={iconName} android={iconName} size={size} color={color} />
+          );
+        },
+      })}
+      tabBarOptions={{
+        iconStyle: {top: 10},
 
-//         activeTintColor: 'tomato',
-//         inactiveTintColor: 'gray',
-//         style: {
-//           backgroundColor: '#222222',
-//         },
-//         labelStyle: {
-//           textAlign: 'center',
-//           fontSize: 17,
-//           fontWeight: 'bold',
-//           top: 10,
-//           borderBottomColor: 'tomato',
-//           borderRadius: 20,
-//         },
-//       }}>
-//       <Tab.Screen name="Home" component={Home} />
-//       {/* <Tab.Screen name="Profile" component={ProfileStack} /> */}
-//     </Tab.Navigator>
-//   );
-// };
-// function ProfileStack({navigation}) {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen
-//         name="profilescreen"
-//         options={{
-//           headerTitle: 'Profile',
-//           headerTintColor: 'royalblue',
-//           headerBackTitleVisible: false,
-//           headerTitleStyle: {
-//             fontSize: 24,
-//             color: '#000',
-//             textAlign: 'left',
-//           },
-//           headerStyle: {
-//             backgroundColor: 'orange',
-//           },
-//           headerLeft: ({naviagation}) => (
-//             <TouchableOpacity onPress={() => navigation.openDrawer()}>
-//               <Image
-//                 style={{marginLeft: 15}}
-//                 source={require('../src/assets/image/ic_list-text.png')}
-//               />
-//             </TouchableOpacity>
-//           ),
-//         }}
-//         component={ProfileScreen}
-//       />
-//     </Stack.Navigator>
-//   );
-// }
+        activeTintColor: 'tomato',
+        inactiveTintColor: 'gray',
+        style: {
+          backgroundColor: '#222222',
+        },
+        labelStyle: {
+          textAlign: 'center',
+          fontSize: 17,
+          fontWeight: 'bold',
+          top: 10,
+          borderBottomColor: 'tomato',
+          borderRadius: 20,
+        },
+      }}>
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Cart" component={CartStack} />
+    </Tab.Navigator>
+  );
+};
+function CartStack({navigation}) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Cart"
+        options={{
+          headerTitle: 'WishList',
+          headerTintColor: 'royalblue',
+          headerBackTitleVisible: false,
+          headerTitleStyle: {
+            fontSize: 24,
+            color: '#000',
+            textAlign: 'left',
+          },
+          headerStyle: {
+            backgroundColor: 'orange',
+          },
+          headerLeft: ({naviagation}) => (
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <Image
+                style={{marginLeft: 15}}
+                source={require('../assets/image/ic_list-text.png')}
+              />
+            </TouchableOpacity>
+          ),
+        }}
+        component={CartDetailScreen}
+      />
+    </Stack.Navigator>
+  );
+}
 function Login({navigation}) {
   return (
     <Stack.Navigator>
@@ -168,7 +169,7 @@ function DrawerHome({navigation}) {
       drawerType="slide"
       screenOptions={{headerShown: false}}
       drawerContent={(props) => <CustomSidebarMenu {...props} />}>
-      <Drawer.Screen name="Home" component={Home} />
+      <Drawer.Screen name="Home" component={TabStack} />
     </Drawer.Navigator>
   );
 }
