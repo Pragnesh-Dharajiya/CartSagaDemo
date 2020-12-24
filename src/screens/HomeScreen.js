@@ -17,7 +17,6 @@ var {height, width} = Dimensions.get('window');
 import Swiper from 'react-native-swiper';
 import * as PostActions from '../actions/BannerActions';
 import {connect} from 'react-redux';
-import SplashScreen from 'react-native-splash-screen';
 
 const HomeScreen = (props) => {
   const [dataBanner, setDataBanner] = useState([]);
@@ -25,7 +24,6 @@ const HomeScreen = (props) => {
   const [selectFood, setSelectFood] = useState([]);
 
   useEffect(() => {
-    SplashScreen.hide();
     props.fetchBanners();
     setDataBanner(props.bannerData.banner);
     setDataCategories(props.bannerData.categories);
