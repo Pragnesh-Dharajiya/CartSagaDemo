@@ -18,6 +18,7 @@ import {CommonActions} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CustomSidebarMenu = ({props, navigation}) => {
+ 
   const _onLogout = () => {
     Alert.alert('Confirm', 'Are you sure that you want to logout?', [
       {
@@ -28,7 +29,7 @@ const CustomSidebarMenu = ({props, navigation}) => {
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
-              routes: [{name: 'Login'}],
+              routes: [{name: 'Splash'}],
             }),
           );
         },
@@ -44,7 +45,7 @@ const CustomSidebarMenu = ({props, navigation}) => {
         source={require('../assets/image/ic_users.png')}
         style={styles.sideMenuProfileIcon}
       />
-      <Text style={styles.sideMenuText}>Sahaj Online Shop</Text>
+      <Text style={styles.sideMenuText}>FoodFinder</Text>
       <DrawerContentScrollView {...props}>
         <DrawerItem
           icon={({tintColor}) => (
@@ -56,7 +57,7 @@ const CustomSidebarMenu = ({props, navigation}) => {
           )}
           label="Home"
           labelStyle={styles.drawerMenuText}
-          onPress={() => navigation.navigate('homescreen')}
+          onPress={() => navigation.navigate('Homes')}
         />
 
         <DrawerItem
@@ -80,6 +81,7 @@ const CustomSidebarMenu = ({props, navigation}) => {
           )}
           label="Your Wish List"
           labelStyle={styles.drawerMenuText}
+          onPress={() => navigation.navigate('Notifications')}
         />
         <DrawerItem
           icon={({tintColor}) => (
@@ -91,7 +93,7 @@ const CustomSidebarMenu = ({props, navigation}) => {
           )}
           label="Your Account"
           labelStyle={styles.drawerMenuText}
-          onPress={() => navigation.navigate('profilescreen')}
+          
         />
         <DrawerItem
           icon={({tintColor}) => (

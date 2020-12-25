@@ -7,17 +7,19 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import HomeScreen from './HomeScreen';
-import NotificationScreen from './NotificationScreen';
-import ExploreScreen from './ExploreScreen';
-import ProfileScreen from './ProfileScreen';
-import MapTestScreen from './MapTestScreen';
-import EditProfileScreen from './EditProfileScreen';
 
 import {useTheme, Avatar} from 'react-native-paper';
 import {View} from 'react-native-animatable';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import CardListScreen from './CardListScreen';
-import CardItemDetails from './CardItemDetails';
+import CartDetailScreen from './CartDetailScreen';
+import FoodDetailScreen from './FoodDetailScreen';
+import FastFoodScreen from './FastFoodScreen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import {Image, Text} from 'react-native';
+import {useSelector} from 'react-redux';
 
 const HomeStack = createStackNavigator();
 const NotificationStack = createStackNavigator();
@@ -28,17 +30,17 @@ const Tab = createMaterialBottomTabNavigator();
 const MainTabScreen = () => (
   <Tab.Navigator initialRouteName="Home" activeColor="#fff">
     <Tab.Screen
-      name="Home"
+      name="Homes"
       component={HomeStackScreen}
       options={{
         tabBarLabel: 'Home',
-        tabBarColor: '#FF6347',
+        tabBarColor: '#fff',
         tabBarIcon: ({color}) => (
           <Icon name="ios-home" color={color} size={26} />
         ),
       }}
     />
-    {/* <Tab.Screen
+    <Tab.Screen
       name="Notifications"
       component={NotificationStackScreen}
       options={{
@@ -48,36 +50,27 @@ const MainTabScreen = () => (
           <Icon name="ios-notifications" color={color} size={26} />
         ),
       }}
-    /> */}
-    {/* <Tab.Screen
+    />
+    <Tab.Screen
       name="Profile"
       component={ProfileStackScreen}
       options={{
         tabBarLabel: 'Profile',
-        tabBarColor: '#694fad',
+        tabBarColor: 'red',
         tabBarIcon: ({color}) => (
           <Icon name="ios-person" color={color} size={26} />
         ),
       }}
-    /> */}
-    {/* <Tab.Screen
-      name="Explore"
-      component={ExploreScreen}
-      options={{
-        tabBarLabel: 'Explore',
-        tabBarColor: '#d02860',
-        tabBarIcon: ({color}) => (
-          <Icon name="ios-aperture" color={color} size={26} />
-        ),
-      }}
-    /> */}
+    />
   </Tab.Navigator>
 );
 
 export default MainTabScreen;
 
-const HomeStackScreen = ({navigation}) => {
+const HomeStackScreen = ({props, navigation}) => {
   const {colors} = useTheme();
+  const cartItems = useSelector((state) => state);
+  console.log('carts', cartItems);
   return (
     <HomeStack.Navigator
       screenOptions={{
@@ -109,15 +102,36 @@ const HomeStackScreen = ({navigation}) => {
           ),
           headerRight: () => (
             <View style={{flexDirection: 'row', marginRight: 10}}>
-              <Icon.Button
-                name="ios-search"
-                size={25}
-                color={colors.text}
-                backgroundColor={colors.background}
-                onPress={() => {}}
-              />
               <TouchableOpacity
-                style={{paddingHorizontal: 10, marginTop: 5}}
+                onPress={() => navigation.navigate('Cart')}
+                style={{
+                  justifyContent: 'center',
+                  marginRight: wp('3%'),
+                  height: 5,
+                  paddingTop: 20,
+                }}>
+                <View
+                  style={{
+                    position: 'absolute',
+                    height: 20,
+                    width: 20,
+                    borderRadius: 15,
+                    backgroundColor: 'rgba(95,197,123,0.8)',
+                    left: 20,
+                    bottom: 5,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 2000,
+                  }}>
+                  <Text style={{color: 'white', fontWeight: 'bold'}}>
+                    {cartItems.cartItemsReducer.quantity}
+                  </Text>
+                </View>
+                <Image source={require('../assets/image/ic_carts.png')} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{paddingHorizontal: 5, marginTop: 5}}
                 onPress={() => {
                   navigation.navigate('Profile');
                 }}>
@@ -133,15 +147,60 @@ const HomeStackScreen = ({navigation}) => {
           ),
         }}
       />
-      <HomeStack.Screen 
+      <HomeStack.Screen
+        name="FastFood"
+        options={{
+          headerTintColor: 'white',
+          headerBackTitleVisible: false,
+          headerTitleStyle: {
+            fontSize: 18,
+            color: '#FFFFFF',
+          },
+          headerStyle: {
+            backgroundColor: '#d9534f',
+          },
+        }}
+        component={FastFoodScreen}
+      />
+      <HomeStack.Screen
+        name="FoodDetail"
+        options={{
+          headerTintColor: 'white',
+          headerBackTitleVisible: false,
+          headerTitleStyle: {
+            fontSize: 18,
+            color: '#FFFFFF',
+          },
+          headerStyle: {
+            backgroundColor: '#d9534f',
+          },
+        }}
+        component={FoodDetailScreen}
+      />
+      <HomeStack.Screen
+        name="Cart"
+        options={{
+          headerTintColor: 'white',
+          headerBackTitleVisible: false,
+          headerTitleStyle: {
+            fontSize: 18,
+            color: '#FFFFFF',
+          },
+          headerStyle: {
+            backgroundColor: '#d9534f',
+          },
+        }}
+        component={CartDetailScreen}
+      />
+      {/* <HomeStack.Screen
         name="CardListScreen"
         component={CardListScreen}
         options={({route}) => ({
           title: route.params.title,
-          headerBackTitleVisible: false
+          headerBackTitleVisible: false,
         })}
       />
-      <HomeStack.Screen 
+      <HomeStack.Screen
         name="CardItemDetails"
         component={CardItemDetails}
         options={({route}) => ({
@@ -149,9 +208,9 @@ const HomeStackScreen = ({navigation}) => {
           headerBackTitleVisible: false,
           headerTitle: false,
           headerTransparent: true,
-          headerTintColor: '#fff'
+          headerTintColor: '#fff',
         })}
-      />
+      /> */}
     </HomeStack.Navigator>
   );
 };
@@ -169,7 +228,7 @@ const NotificationStackScreen = ({navigation}) => (
     }}>
     <NotificationStack.Screen
       name="Notifications"
-      component={NotificationScreen}
+      component={CartDetailScreen}
       options={{
         headerLeft: () => (
           <Icon.Button
@@ -199,7 +258,7 @@ const ProfileStackScreen = ({navigation}) => {
       }}>
       <ProfileStack.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={CartDetailScreen}
         options={{
           title: '',
           headerLeft: () => (
@@ -231,7 +290,7 @@ const ProfileStackScreen = ({navigation}) => {
         options={{
           title: 'Edit Profile',
         }}
-        component={EditProfileScreen}
+        component={CartDetailScreen}
       />
     </ProfileStack.Navigator>
   );

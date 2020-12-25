@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffa07a',
   },
   textSign: {
-    color: '#191970',
+    color: '#05375a',
     fontWeight: 'bold',
     fontSize: hp('1.75%'),
   },

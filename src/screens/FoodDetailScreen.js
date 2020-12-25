@@ -21,14 +21,15 @@ var {height, width} = Dimensions.get('window');
 import * as CONST from '../utils/Constants';
 
 const FoodDetailScreen = (props) => {
-  const [catg, setCatg] = useState([]);
   useEffect(() => {
     setCatg(props.route.params.foodId);
+    props.navigation.setOptions({
+      headerRight: () => CartIcon({props, cartItems}),
+    });
   }, []);
 
-  props.navigation.setOptions({
-    headerRight: () => CartIcon({props, cartItems}),
-  });
+  const [catg, setCatg] = useState([]);
+
   const cartItems = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -110,7 +111,7 @@ const FoodDetailScreen = (props) => {
         }}>
         {props.route.params.foodName}
       </Text>
-      <ScrollView>
+      <SafeAreaView style={{flex: 1}}>
         <View style={{flex: 1, backgroundColor: '#f2f2f2'}}>
           <FlatList
             data={props.route.params.food}
@@ -119,7 +120,7 @@ const FoodDetailScreen = (props) => {
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
-      </ScrollView>
+      </SafeAreaView>
     </View>
   );
 };

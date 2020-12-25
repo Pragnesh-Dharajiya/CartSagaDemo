@@ -17,41 +17,17 @@ var {height, width} = Dimensions.get('window');
 import Swiper from 'react-native-swiper';
 import * as PostActions from '../actions/BannerActions';
 import {connect} from 'react-redux';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const HomeScreen = (props) => {
-  const [dataBanner, setDataBanner] = useState([]);
-  const [dataCategories, setDataCategories] = useState([]);
-  const [selectFood, setSelectFood] = useState([]);
-
-  useEffect(() => {
-    props.fetchBanners();
-    setDataBanner(props.bannerData.banner);
-    setDataCategories(props.bannerData.categories);
-    setSelectFood(props.bannerData.food);
-  }, []);
-
-  function _renderItem(item) {
-    return (
-      <TouchableOpacity
-        style={[styles.divCategorie, {backgroundColor: item.color}]}
-        onPress={() => {
-          props.navigation.navigate('FoodDetail', {
-            foodId: item.id,
-            foodName: item.name,
-
-            food: selectFood,
-          });
-        }}>
-        <Image
-          style={{width: 380, height: 150}}
-          resizeMode="contain"
-          source={{uri: item.image}}
-        />
-        <Text style={{fontWeight: 'bold', fontSize: 22}}>{item.name}</Text>
-      </TouchableOpacity>
-    );
-  }
-
+  
   return (
     <ScrollView>
       <View
@@ -68,20 +44,31 @@ const HomeScreen = (props) => {
             source={require('./../assets/image/ic_foodapp.png')}
           />
           <Swiper
-            style={{height: width / 2}}
-            showsButtons={false}
-            autoplay={true}
-            autoplayTimeout={2}>
-            {dataBanner.map((itembann, index) => {
-              return (
-                <Image
-                  key={index}
-                  style={styles.imageBanner}
-                  resizeMode="contain"
-                  source={{uri: itembann}}
-                />
-              );
-            })}
+            autoplay
+            horizontal={false}
+            height={200}
+            activeDotColor="#FF6347">
+            <View style={styles.slide}>
+              <Image
+                source={require('./../assets/image/ic_banner-1.jpg')}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+            <View style={styles.slide}>
+              <Image
+                source={require('./../assets/image/ic_banner-2.jpg')}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+            <View style={styles.slide}>
+              <Image
+                source={require('./../assets/image/ic_banner-3.png')}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
           </Swiper>
           <View style={{height: 20}} />
         </View>
@@ -93,14 +80,56 @@ const HomeScreen = (props) => {
             backgroundColor: 'white',
           }}>
           <Text style={styles.titleCatg}>Categories </Text>
-          <FlatList
-            showsHorizontalScrollIndicator={false}
-            horizontal={true}
-            data={dataCategories}
-            renderItem={({item}) => _renderItem(item)}
-            keyExtractor={(item, index) => index.toString()}
-          />
-          <View style={{height: 20}} />
+          <View style={styles.categoryContainer}>
+            <TouchableOpacity style={styles.categoryBtn}>
+              <View style={styles.categoryIcon}>
+                <Ionicons name="ios-restaurant" size={35} color="#FF6347" />
+              </View>
+              <Text style={styles.categoryBtnTxt}>Restaurant</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.categoryBtn}
+              onPress={() =>
+                props.navigation.navigate('FastFood', {title: 'FastFood'})
+              }>
+              <View style={styles.categoryIcon}>
+                <MaterialCommunityIcons
+                  name="food-fork-drink"
+                  size={35}
+                  color="#FF6347"
+                />
+              </View>
+              <Text style={styles.categoryBtnTxt}>Fastfood Center</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.categoryBtn}>
+              <View style={styles.categoryIcon}>
+                <MaterialCommunityIcons name="food" size={35} color="#FF6347" />
+              </View>
+              <Text style={styles.categoryBtnTxt}>Snacks Corner</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={[styles.categoryContainer, {marginTop: 30}]}>
+            <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+              <View style={styles.categoryIcon}>
+                <Fontisto name="hotel" size={35} color="#FF6347" />
+              </View>
+              <Text style={styles.categoryBtnTxt}>Hotels</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+              <View style={styles.categoryIcon}>
+                <Ionicons name="md-restaurant" size={35} color="#FF6347" />
+              </View>
+              <Text style={styles.categoryBtnTxt}>Dineouts</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+              <View style={styles.categoryIcon}>
+                <MaterialIcons name="expand-more" size={35} color="#FF6347" />
+              </View>
+              <Text style={styles.categoryBtnTxt}>Show More</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{height: 30}} />
         </View>
       </View>
     </ScrollView>
@@ -125,6 +154,42 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
+  },
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    borderRadius: 8,
+  },
+  sliderImage: {
+    height: '100%',
+    width: '95%',
+    alignSelf: 'center',
+    borderRadius: 8,
+  },
+  categoryContainer: {
+    flexDirection: 'row',
+    width: '90%',
+    alignSelf: 'center',
+    marginTop: 25,
+    marginBottom: 10,
+  },
+  categoryBtn: {
+    flex: 1,
+  },
+  categoryIcon: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: 80,
+    height: 80,
+    backgroundColor: '#fdeae7' /* '#FF6347' */,
+    borderRadius: 50,
+  },
+  categoryBtnTxt: {
+    alignSelf: 'center',
+    marginTop: 5,
+    color: '#de4f35',
   },
 });
 

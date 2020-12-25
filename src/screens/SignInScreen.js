@@ -9,11 +9,6 @@ import {
   TextInput,
   StatusBar,
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 
 import {CommonActions} from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
@@ -26,7 +21,7 @@ import {useTheme} from 'react-native-paper';
 const SignInScreen = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  
   const userinfo = {username: 'Admin', password: '12345'};
 
   const _onChangeUsername = (text) => {
@@ -47,7 +42,7 @@ const SignInScreen = (props) => {
         }),
       );
     } else {
-      alert('Please enter valid Username and Password');
+      alert('Username or password is incorrect');
     }
   };
 
@@ -62,7 +57,7 @@ const SignInScreen = (props) => {
         style={[
           styles.footer,
           {
-            backgroundColor: '#d8bfd8',
+            backgroundColor: '#f0ffff',
           },
         ]}>
         <Text
@@ -79,6 +74,8 @@ const SignInScreen = (props) => {
           <TextInput
             placeholder="Your Username"
             placeholderTextColor="#666666"
+            onChangeText={(text) => _onChangeUsername(text)}
+            value={username}
             style={[
               styles.textInput,
               {
@@ -104,6 +101,9 @@ const SignInScreen = (props) => {
           <TextInput
             placeholder="Your Password"
             placeholderTextColor="#666666"
+            onChangeText={(text) => _onChangePassword(text)}
+            secureTextEntry={true}
+            value={password}
             style={[
               styles.textInput,
               {
@@ -120,14 +120,17 @@ const SignInScreen = (props) => {
           </Text>
         </TouchableOpacity>
         <View style={styles.button}>
-          <TouchableOpacity style={styles.signIn}>
+          <TouchableOpacity
+            style={styles.signIn}
+            onPress={() => {
+              _onLogin();
+            }}>
             <View backgroundColor="#ff4500" style={styles.signIn}>
               <Text
                 style={[
                   styles.textSign,
                   {
-                    color: "black",
-                    
+                    color: '#f0ffff',
                   },
                 ]}>
                 Sign In
@@ -136,7 +139,6 @@ const SignInScreen = (props) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('SignUpScreen')}
             style={[
               styles.signIn,
               {
@@ -157,117 +159,6 @@ const SignInScreen = (props) => {
           </TouchableOpacity>
         </View>
       </Animatable.View>
-
-      {/* <KeyboardAwareScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{alignItems: 'center'}}>
-        <View style={{marginTop: hp('15%')}}>
-          <Image
-            style={{
-              tintColor: 'yellow',
-              resizeMode: 'contain',
-              height: hp('30%'),
-              width: 300,
-            }}
-            source={require('../assets/image/ic_foodapp.png')}></Image>
-        </View>
-
-        <View style={{marginTop: hp('10%'), width: wp('80%')}}>
-          <View style={styles.SectionStyle}>
-            <Icon name="user" color="yellow" size={20}></Icon>
-            <TextInput
-              style={{
-                flex: 1,
-                fontSize: 17,
-                color: '#FFFFFF',
-                marginLeft: wp('2%'),
-              }}
-              onChangeText={(text) => _onChangeUsername(text)}
-              value={username}
-              placeholder="Username"
-              underlineColorAndroid="transparent"
-              placeholderTextColor="#FFFFFF"
-            />
-          </View>
-
-          <View
-            style={{
-              height: 1,
-              marginVertical: 10,
-              backgroundColor: '#9B9A9B',
-              width: '100%',
-            }}
-          />
-
-          <View style={styles.SectionStyle}>
-          <Icon name="key" color="yellow" size={20}></Icon>
-            <TextInput
-              style={{
-                flex: 1,
-                fontSize: 17,
-                marginLeft: wp('2%'),
-
-                color: '#FFFFFF',
-              }}
-              onChangeText={(text) => _onChangePassword(text)}
-              secureTextEntry={true}
-              placeholder="Password"
-              underlineColorAndroid="transparent"
-              placeholderTextColor="#FFFFFF"
-              value={password}
-            />
-          </View>
-          <View style={{alignItems: 'flex-end', marginTop: hp('2%')}}>
-            <TouchableOpacity>
-              <Text
-                style={{
-                  color: '#FFFFFF',
-                  fontSize: 14,
-                }}>
-                Forgot Password?
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{marginTop: hp('8%')}}>
-            <TouchableOpacity
-              style={styles.loginScreenButton}
-              onPress={() => {
-                _onLogin();
-              }}>
-              <Text style={styles.loginText}>Login</Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'flex-end',
-              justifyContent: 'center',
-              marginTop: hp('10%'),
-            }}>
-            <Text
-              style={{
-                color: '#FFFFFF',
-                fontSize: 15,
-                alignItems: 'center',
-              }}>
-              Don't have an account?
-            </Text>
-            <TouchableOpacity>
-              <Text
-                style={{
-                  color: '#FFFFFF',
-                  fontSize: 15,
-                  marginLeft: 5,
-                }}>
-                Create Now
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <SafeAreaView />
-      </KeyboardAwareScrollView>
- */}
     </View>
   );
 };
@@ -275,7 +166,7 @@ const SignInScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#dc143c',
+    backgroundColor: '#f4a460',
   },
   header: {
     flex: 1,
@@ -306,7 +197,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'red',
     paddingBottom: 15,
-    
   },
   actionError: {
     flexDirection: 'row',
@@ -320,7 +210,7 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === 'ios' ? 0 : -12,
     paddingLeft: 10,
     color: '#05375a',
-    fontSize:16
+    fontSize: 16,
   },
   errorMsg: {
     color: '#FF0000',

@@ -10,8 +10,9 @@ import {
   StyleSheet,
   FlatList,
   Alert,
+  SafeAreaView,
 } from 'react-native';
-import Icon from 'react-native-ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 var {height, width} = Dimensions.get('window');
 import * as CONST from '../utils/Constants';
@@ -53,144 +54,151 @@ const CartDetailScreen = (props) => {
         Cart Food
       </Text>
       {props.cartItems.length !== 0 ? (
-        <FlatList
-          data={props.cartItems}
-          renderItem={({item, index}) => (
-            <View
-              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <View style={{height: 20}} />
+        <SafeAreaView style={{flex: 1}}>
+          <FlatList
+            keyExtractor={(item, index) => index.toString()}
+            data={props.cartItems}
+            renderItem={({item, index}) => (
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <View style={{height: 20}} />
 
-              <View style={{height: 10}} />
+                <View style={{height: 10}} />
 
-              <View style={{flex: 1}}>
-                <View
-                  style={{
-                    width: width - 20,
-                    backgroundColor: 'transparent',
-                    flexDirection: 'row',
-                    borderBottomWidth: 2,
-                    borderColor: '#cccccc',
-                    paddingBottom: 10,
-                  }}>
-                  <Image
-                    resizeMode={'contain'}
-                    style={{width: width / 3, height: width / 3}}
-                    source={{uri: item.image}}
-                  />
+                <View style={{flex: 1}}>
                   <View
                     style={{
-                      flex: 1,
+                      width: width - 20,
                       backgroundColor: 'transparent',
-                      padding: 10,
-                      justifyContent: 'space-between',
+                      flexDirection: 'row',
+                      borderBottomWidth: 2,
+                      borderColor: '#cccccc',
+                      paddingBottom: 10,
                     }}>
-                    <View>
-                      <Text style={{fontWeight: 'bold', fontSize: 20}}>
-                        Name: {item.name}
-                      </Text>
-                    </View>
+                    <Image
+                      resizeMode={'contain'}
+                      style={{width: width / 3, height: width / 3}}
+                      source={{uri: item.image}}
+                    />
                     <View
                       style={{
-                        flexDirection: 'row',
+                        flex: 1,
+                        backgroundColor: 'transparent',
+                        padding: 10,
                         justifyContent: 'space-between',
-                        top: 10,
-                        zIndex: 999,
                       }}>
+                      <View>
+                        <Text style={{fontWeight: 'bold', fontSize: 20}}>
+                          Name: {item.name}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          top: 10,
+                          zIndex: 999,
+                        }}>
+                        <Text
+                          style={{
+                            fontWeight: 'bold',
+                            color: '#48b4e0',
+                            fontSize: 20,
+                          }}>
+                          Price: ${item.price}
+                        </Text>
+                        <View
+                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          <TouchableOpacity
+                            onPress={() => decrementQuantity(item)}>
+                            <FontAwesome
+                              name="minus-circle"
+                              size={30}
+                              color="#FF6347"
+                            />
+                          </TouchableOpacity>
+                          <Text
+                            style={{paddingHorizontal: 8, fontWeight: 'bold'}}>
+                            {item.quantity}
+                          </Text>
+                          <TouchableOpacity
+                            onPress={() => incrementQuantity(item)}>
+                            <FontAwesome
+                              name="plus-circle"
+                              size={30}
+                              color="#FF6347"
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
                       <Text
                         style={{
                           fontWeight: 'bold',
                           color: '#48b4e0',
                           fontSize: 20,
+                          top: 15,
                         }}>
-                        Price: ${item.price}
+                        Total Price: ${item.total}
                       </Text>
                       <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        style={{
+                          flex: 1,
+                          flexDirection: 'row',
+                          paddingBottom: 15,
+                        }}>
                         <TouchableOpacity
-                          onPress={() => decrementQuantity(item)}>
-                          <Icon
-                            name="ios-remove-circle"
-                            size={30}
-                            color={'#48b4e0'}
-                          />
+                          onPress={() => Alert.alert('Buy Success')}
+                          style={{
+                            alignSelf: 'center',
+                            backgroundColor: 'tomato',
+                            width: 120,
+                            alignItems: 'center',
+                            padding: 5,
+                            borderRadius: 45,
+                            left: -10,
+                            top: 20,
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 24,
+                              fontWeight: 'bold',
+                              color: 'white',
+                            }}>
+                            Buy
+                          </Text>
                         </TouchableOpacity>
-                        <Text
-                          style={{paddingHorizontal: 8, fontWeight: 'bold'}}>
-                          {item.quantity}
-                        </Text>
                         <TouchableOpacity
-                          onPress={() => incrementQuantity(item)}>
-                          <Icon
-                            name="ios-add-circle"
-                            size={30}
-                            color={'#48b4e0'}
-                          />
+                          onPress={() => removeItemFromCart(item, index)}
+                          style={{
+                            alignSelf: 'center',
+                            backgroundColor: 'tomato',
+                            width: 130,
+                            alignItems: 'center',
+                            padding: 5,
+                            borderRadius: 45,
+                            top: 20,
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 24,
+                              fontWeight: 'bold',
+                              color: 'white',
+                            }}>
+                            Remove
+                          </Text>
                         </TouchableOpacity>
                       </View>
-                    </View>
-                    <Text
-                      style={{
-                        fontWeight: 'bold',
-                        color: '#48b4e0',
-                        fontSize: 20,
-                        top: 15,
-                      }}>
-                      Total Price: ${item.total}
-                    </Text>
-                    <View
-                      style={{
-                        flex: 1,
-                        flexDirection: 'row',
-                        paddingBottom: 15,
-                      }}>
-                      <TouchableOpacity
-                        onPress={() => Alert.alert('Buy Success')}
-                        style={{
-                          alignSelf: 'center',
-                          backgroundColor: 'tomato',
-                          width: 120,
-                          alignItems: 'center',
-                          padding: 5,
-                          borderRadius: 45,
-                          left: -10,
-                          top: 20,
-                        }}>
-                        <Text
-                          style={{
-                            fontSize: 24,
-                            fontWeight: 'bold',
-                            color: 'white',
-                          }}>
-                          Buy
-                        </Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() => removeItemFromCart(item, index)}
-                        style={{
-                          alignSelf: 'center',
-                          backgroundColor: 'tomato',
-                          width: 130,
-                          alignItems: 'center',
-                          padding: 5,
-                          borderRadius: 45,
-                          top: 20,
-                        }}>
-                        <Text
-                          style={{
-                            fontSize: 24,
-                            fontWeight: 'bold',
-                            color: 'white',
-                          }}>
-                          Remove
-                        </Text>
-                      </TouchableOpacity>
                     </View>
                   </View>
                 </View>
               </View>
-            </View>
-          )}
-        />
+            )}
+          />
+        </SafeAreaView>
       ) : (
         <View style={styles.emptyCartContainer}>
           <Text style={styles.emptyCartMessage}>Your cart is empty</Text>
